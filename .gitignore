@@ -1,0 +1,40 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Build outputs
+dist/
+frontend/dist/
+*.tsbuildinfo
+
+# Test coverage & reports
+coverage/
+*.lcov
+frontend/coverage/
+frontend/test-results/
+frontend/playwright-report/
+
+# IDE & Editor
+.claude/
+.DS_Store
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Old Django stuff (no longer used)
+db.sqlite3
+manage.py
+requirements.txt
+venv/
