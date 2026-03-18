@@ -33,6 +33,7 @@ export function PidChart({ pid, customName, customUnit }: PidChartProps) {
         color: 'rgba(100, 150, 255, 1)',
         width: 2,
       },
+      hovertemplate: `<b>${displayName}</b><br>Time: %{x:.2f}s<br>Value: %{y:.2f} ${displayUnit}<extra></extra>`,
     }
 
     const layout = {

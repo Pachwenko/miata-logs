@@ -47,10 +47,12 @@ export function CombinedChart({
       const normalized = values.map((v) => normalizeValue(v, min, max))
 
       const displayName = customNames?.[pid.id] || pid.name
+      const displayUnit = pid.unit
 
       return {
         x: times,
         y: normalized,
+        customdata: values,
         type: 'scatter' as const,
         mode: 'lines' as const,
         name: displayName,
@@ -58,6 +60,7 @@ export function CombinedChart({
           color: colors[pid.id],
           width: 2,
         },
+        hovertemplate: `<b>${displayName}</b><br>Time: %{x:.2f}s<br>Normalized: %{y:.1f}%<br>Value: %{customdata:.2f} ${displayUnit}<extra></extra>`,
       }
     })
 
