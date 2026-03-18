@@ -1,0 +1,41 @@
+.file-upload-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  padding: 2rem;
+}
+
+.upload-area {
+  border: 3px dashed var(--border);
+  border-radius: 12px;
+  padding: 4rem 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: var(--code-bg);
+  max-width: 500px;
+}
+
+.upload-area:hover {
+  border-color: var(--accent);
+  background-color: var(--accent-bg);
+}
+
+.upload-content h2 {
+  margin: 0 0 1rem 0;
+  font-size: 2rem;
+  color: var(--accent);
+}
+
+.upload-content p {
+  margin: 0.5rem 0;
+  color: var(--text-h);
+  font-size: 1.1rem;
+}
+
+.or-text {
+  color: var(--text);
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}

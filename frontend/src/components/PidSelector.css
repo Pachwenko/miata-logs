@@ -1,0 +1,53 @@
+.pid-selector {
+  background-color: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.pid-selector h3 {
+  margin: 0 0 1rem 0;
+  color: var(--text-h);
+  font-size: 1.1rem;
+}
+
+.pid-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.8rem;
+}
+
+.pid-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  cursor: pointer;
+  padding: 0.6rem;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+.pid-checkbox:hover {
+  background-color: var(--accent-bg);
+}
+
+.pid-checkbox input[type='checkbox'] {
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+  accent-color: var(--accent);
+}
+
+.pid-label {
+  color: var(--text-h);
+  font-size: 0.95rem;
+  font-weight: 500;
+  user-select: none;
+}
+
+.unit {
+  color: var(--text);
+  font-size: 0.85rem;
+  font-weight: normal;
+}

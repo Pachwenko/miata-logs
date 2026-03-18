@@ -1,0 +1,18 @@
+.pid-chart-container {
+  margin-bottom: 2rem;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: rgba(30, 30, 30, 1);
+  border: 1px solid var(--border);
+}
+
+.pid-chart {
+  width: 100%;
+  height: 350px;
+  background-color: rgba(30, 30, 30, 1);
+}
+
+.pid-chart :deep(.plot-container) {
+  width: 100%;
+  height: 100%;
+}

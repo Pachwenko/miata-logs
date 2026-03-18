@@ -1,0 +1,31 @@
+.log-info {
+  background-color: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.info-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.info-row .label {
+  font-size: 0.85rem;
+  color: var(--text);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.info-row .value {
+  font-family: var(--mono);
+  font-size: 1rem;
+  color: var(--text-h);
+  word-break: break-all;
+}
