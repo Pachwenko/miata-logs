@@ -38,6 +38,16 @@ export function FileUpload({ onFileSelect }: FileUploadProps) {
     reader.readAsText(file)
   }
 
+  const loadExampleFile = async () => {
+    try {
+      const response = await fetch('/miata-logs/example_idel_log.vtlog')
+      const content = await response.text()
+      onFileSelect(content)
+    } catch (error) {
+      console.error('Failed to load example file:', error)
+    }
+  }
+
   return (
     <div className="file-upload-container">
       <div
@@ -51,6 +61,16 @@ export function FileUpload({ onFileSelect }: FileUploadProps) {
           <p>Drag and drop a .vtlog file here</p>
           <p className="or-text">or click to browse</p>
         </div>
+      </div>
+
+      <div className="example-section">
+        <p className="example-label">🧪 Try it out:</p>
+        <button className="example-button" onClick={loadExampleFile}>
+          Load Example File
+        </button>
+        <a href="/miata-logs/example_idel_log.vtlog" download className="download-link">
+          ⬇️ Download Example
+        </a>
       </div>
       <input
         ref={inputRef}

@@ -39,3 +39,54 @@
   font-size: 0.9rem;
   margin-top: 1rem;
 }
+
+.example-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding: 1.5rem;
+  background-color: var(--code-bg);
+  border-radius: 8px;
+  max-width: 500px;
+}
+
+.example-label {
+  margin: 0;
+  color: var(--text-h);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.example-button {
+  padding: 0.75rem 1.5rem;
+  background-color: var(--accent);
+  color: #000;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+}
+
+.example-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(100, 150, 255, 0.3);
+}
+
+.download-link {
+  padding: 0.6rem 1.2rem;
+  color: var(--accent);
+  text-decoration: none;
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.download-link:hover {
+  background-color: var(--accent);
+  color: #000;
+}
