@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Plotly from 'plotly.js/dist/plotly.js'
 import { type ParsedPID } from '../parser/LogParser'
 import { calculateStats } from '../utils/stats'
@@ -13,6 +13,7 @@ interface PidChartProps {
 
 export function PidChart({ pid, customName, customUnit }: PidChartProps) {
   const containerRef = useRef<HTMLDivElement>(null)
+  const [isFullscreen, setIsFullscreen] = useState(false)
 
   const displayName = customName || pid.name
   const displayUnit = customUnit !== undefined ? customUnit : pid.unit
@@ -72,10 +73,46 @@ export function PidChart({ pid, customName, customUnit }: PidChartProps) {
   const values = pid.records.map((r) => r.value)
   const stats = calculateStats(values)
 
+  const toggleFullscreen = async () => {
+    if (!containerRef.current) return
+
+    try {
+      if (document.fullscreenElement) {
+        await document.exitFullscreen()
+        setIsFullscreen(false)
+      } else {
+        await containerRef.current.requestFullscreen()
+        setIsFullscreen(true)
+      }
+    } catch (err) {
+      console.error('Fullscreen request failed:', err)
+    }
+  }
+
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement)
+    }
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange)
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange)
+    }
+  }, [])
+
   return (
     <div className="pid-chart-container">
+      <div className="pid-chart-header">
+        <button
+          className="fullscreen-btn"
+          onClick={toggleFullscreen}
+          title={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
+        >
+          {isFullscreen ? '⛶' : '⛶'}
+        </button>
+      </div>
       <div ref={containerRef} className="pid-chart" />
-      <PidStats stats={stats} unit={displayUnit} />
+      {!isFullscreen && <PidStats stats={stats} unit={displayUnit} />}
     </div>
   )
 }

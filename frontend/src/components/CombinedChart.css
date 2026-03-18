@@ -98,6 +98,64 @@
   height: 100%;
 }
 
+.combined-header-buttons {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.fullscreen-btn {
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  opacity: 0.7;
+}
+
+.fullscreen-btn:hover {
+  opacity: 1;
+  background-color: var(--accent-bg);
+}
+
+/* Fullscreen mode styles */
+.combined-chart-section:-webkit-full-screen {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 1.5rem;
+  border-radius: 0;
+  border: none;
+}
+
+.combined-chart-section:fullscreen {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 1.5rem;
+  border-radius: 0;
+  border: none;
+}
+
+.combined-chart-section:-webkit-full-screen .combined-chart {
+  height: calc(100vh - 80px);
+}
+
+.combined-chart-section:fullscreen .combined-chart {
+  height: calc(100vh - 80px);
+}
+
+.combined-chart-section:-webkit-full-screen .color-config {
+  display: none;
+}
+
+.combined-chart-section:fullscreen .color-config {
+  display: none;
+}
+
 @media (max-width: 768px) {
   .combined-chart-section {
     padding: 1rem;
@@ -115,6 +173,10 @@
     flex-direction: column;
     gap: 1rem;
     align-items: flex-start;
+  }
+
+  .combined-header-buttons {
+    width: 100%;
   }
 
   .color-config-toggle {

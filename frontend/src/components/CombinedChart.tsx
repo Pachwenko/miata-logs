@@ -34,6 +34,7 @@ export function CombinedChart({
     return initColors
   })
   const [showConfig, setShowConfig] = useState(false)
+  const [isFullscreen, setIsFullscreen] = useState(false)
 
   const visiblePidsArray = pids.filter((p) => visiblePids.has(p.id))
 
@@ -112,17 +113,54 @@ export function CombinedChart({
     onColorChange?.(pidId, newColor)
   }
 
+  const toggleFullscreen = async () => {
+    const element = document.querySelector('.combined-chart-section')
+    if (!element) return
+
+    try {
+      if (document.fullscreenElement) {
+        await document.exitFullscreen()
+        setIsFullscreen(false)
+      } else {
+        await element.requestFullscreen()
+        setIsFullscreen(true)
+      }
+    } catch (err) {
+      console.error('Fullscreen request failed:', err)
+    }
+  }
+
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(!!document.fullscreenElement)
+    }
+
+    document.addEventListener('fullscreenchange', handleFullscreenChange)
+    return () => {
+      document.removeEventListener('fullscreenchange', handleFullscreenChange)
+    }
+  }, [])
+
   return (
     <div className="combined-chart-section">
       <div className="combined-header">
         <h3>Combined View</h3>
-        <button
-          className="color-config-toggle"
-          onClick={() => setShowConfig(!showConfig)}
-          title="Toggle color configuration"
-        >
-          🎨 Colors
-        </button>
+        <div className="combined-header-buttons">
+          <button
+            className="fullscreen-btn"
+            onClick={toggleFullscreen}
+            title={isFullscreen ? 'Exit fullscreen' : 'Enter fullscreen'}
+          >
+            ⛶
+          </button>
+          <button
+            className="color-config-toggle"
+            onClick={() => setShowConfig(!showConfig)}
+            title="Toggle color configuration"
+          >
+            🎨 Colors
+          </button>
+        </div>
       </div>
 
       {showConfig && (
