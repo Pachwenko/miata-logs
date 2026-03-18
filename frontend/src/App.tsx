@@ -2,10 +2,9 @@ import { useState, useEffect } from 'react'
 import { parseVTLog, type ParsedLog } from './parser/LogParser'
 import { FileUpload } from './components/FileUpload'
 import { LogInfo } from './components/LogInfo'
-import { PidSelector } from './components/PidSelector'
 import { PidConfigPanel } from './components/PidConfigPanel'
-import { PidChart } from './components/PidChart'
 import { CombinedChart } from './components/CombinedChart'
+import { ChannelViewer } from './components/ChannelViewer'
 import { configStore } from './utils/configStore'
 import './App.css'
 
@@ -32,9 +31,6 @@ function App() {
     )
   })
   const [error, setError] = useState<string | null>(null)
-  const [showIndividualCharts, setShowIndividualCharts] = useState(() => {
-    return configStore.getShowIndividualCharts()
-  })
 
   // Sync state changes to configStore
   useEffect(() => {
@@ -54,10 +50,6 @@ function App() {
     )
     configStore.setPidCustomizations(customizations)
   }, [pidConfigs, pidColors])
-
-  useEffect(() => {
-    configStore.setShowIndividualCharts(showIndividualCharts)
-  }, [showIndividualCharts])
 
   const handleFileSelect = (content: string) => {
     try {
@@ -119,51 +111,44 @@ function App() {
 
       <main className="app-main">
         <LogInfo log={log} />
-        <PidConfigPanel pids={log.pids} pidConfigs={pidConfigs} onConfigChange={handleConfigChange} />
-        <PidSelector pids={log.pids} visiblePids={visiblePids} onToggle={handleTogglePid} />
-
-        {/* Combined Chart - Main View */}
-        <CombinedChart
+        <PidConfigPanel
           pids={log.pids}
+          pidConfigs={pidConfigs}
           visiblePids={visiblePids}
-          initialColors={pidColors}
-          onColorChange={handleColorChange}
-          customNames={Object.fromEntries(
-            Object.entries(pidConfigs).map(([id, config]) => [parseInt(id), config.name])
-          )}
-          customUnits={Object.fromEntries(
-            Object.entries(pidConfigs).map(([id, config]) => [parseInt(id), config.unit])
-          )}
+          onConfigChange={handleConfigChange}
+          onToggleVisibility={handleTogglePid}
         />
 
-        {/* Individual Charts - Collapsible */}
-        <div className="individual-charts-section">
-          <button
-            className="individual-charts-toggle"
-            onClick={() => setShowIndividualCharts(!showIndividualCharts)}
-            aria-expanded={showIndividualCharts}
-          >
-            <span className="toggle-arrow">
-              {showIndividualCharts ? '▼' : '▶'}
-            </span>
-            <span>Individual Channels</span>
-          </button>
+        {/* Derived config for all charts */}
+        {(() => {
+          const customNames = Object.fromEntries(
+            Object.entries(pidConfigs).map(([id, config]) => [parseInt(id), config.name])
+          )
+          const customUnits = Object.fromEntries(
+            Object.entries(pidConfigs).map(([id, config]) => [parseInt(id), config.unit])
+          )
 
-          {showIndividualCharts && (
-            <div className="charts-container">
-              {log.pids
-                .filter((pid) => visiblePids.has(pid.id))
-                .map((pid) => (
-                  <PidChart
-                    key={pid.id}
-                    pid={pid}
-                    customName={pidConfigs[pid.id]?.name}
-                    customUnit={pidConfigs[pid.id]?.unit}
-                  />
-                ))}
-            </div>
-          )}
-        </div>
+          return (
+            <>
+              {/* Combined Chart */}
+              <CombinedChart
+                pids={log.pids}
+                visiblePids={visiblePids}
+                initialColors={pidColors}
+                onColorChange={handleColorChange}
+                customNames={customNames}
+                customUnits={customUnits}
+              />
+
+              {/* Individual Channels View - with mode selector */}
+              <ChannelViewer
+                pids={log.pids}
+                visiblePids={visiblePids}
+                pidConfigs={pidConfigs}
+              />
+            </>
+          )
+        })()}
       </main>
     </div>
   )

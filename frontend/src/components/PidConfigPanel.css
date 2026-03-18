@@ -59,6 +59,21 @@
   border-bottom: 1px solid var(--border);
 }
 
+.checkbox-col {
+  width: 50px;
+  text-align: center;
+}
+
+.checkbox-cell {
+  text-align: center;
+  padding: 0.8rem;
+}
+
+.checkbox-cell input[type="checkbox"] {
+  width: auto;
+  cursor: pointer;
+}
+
 .pid-id-cell {
   font-family: var(--mono);
   color: var(--text);

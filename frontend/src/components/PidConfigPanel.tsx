@@ -9,13 +9,17 @@ interface PidConfig {
 interface PidConfigPanelProps {
   pids: ParsedPID[]
   pidConfigs: PidConfig
+  visiblePids: Set<number>
   onConfigChange: (pidId: number, name: string, unit: string) => void
+  onToggleVisibility: (pidId: number) => void
 }
 
 export function PidConfigPanel({
   pids,
   pidConfigs,
+  visiblePids,
   onConfigChange,
+  onToggleVisibility,
 }: PidConfigPanelProps) {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -29,7 +33,7 @@ export function PidConfigPanel({
         <span className="toggle-arrow">
           {isOpen ? '▼' : '▶'}
         </span>
-        <span>Configuration</span>
+        <span>Configuration ({visiblePids.size} of {pids.length})</span>
       </button>
 
       {isOpen && (
@@ -37,6 +41,7 @@ export function PidConfigPanel({
           <table className="config-table">
             <thead>
               <tr>
+                <th className="checkbox-col"></th>
                 <th>PID ID</th>
                 <th>Name</th>
                 <th>Unit</th>
@@ -47,6 +52,13 @@ export function PidConfigPanel({
                 const config = pidConfigs[pid.id]
                 return (
                   <tr key={pid.id}>
+                    <td className="checkbox-cell">
+                      <input
+                        type="checkbox"
+                        checked={visiblePids.has(pid.id)}
+                        onChange={() => onToggleVisibility(pid.id)}
+                      />
+                    </td>
                     <td className="pid-id-cell">{pid.id}</td>
                     <td>
                       <input
